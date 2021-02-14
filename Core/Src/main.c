@@ -117,8 +117,16 @@ int main(void)
 		  }
 		  SwitchState_S1[1] = SwitchState_S1[0]; //save state
 		  if(SwitchState_S2[1] == GPIO_PIN_SET && SwitchState_S2[0] == GPIO_PIN_RESET) //ชาชี้น S2 TAsk 2
-		 	  {}
-		 	  SwitchState_S2[1]=SwitchState_S2[0] ;
+		 	  {
+			  	  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7 == GPIO_PIN_SET))
+			  	  {HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);}
+			  	  else{HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);}
+		 	  }
+		  SwitchState_S2[1]=SwitchState_S2[0] ;
+		  if(SwitchSTate_S3[])
+		  {
+
+		  }
 	  }
 	  switch (counte)
 	  {
