@@ -89,7 +89,9 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  GPIO_PinState SwitchState[2] ;
+  GPIO_PinState SwitchState_S1[2] ;
+  GPIO_PinState SwitchState_S2[2] ;
+  GPIO_PinState SwitchSTate_S3[2] ;
   uint16_t LED_D1	= 0 ;
   uint32_t TimeStamp = 0 ;
   uint32_t ButtonTimestamp = 0 ;
@@ -105,13 +107,18 @@ int main(void)
 	  if(HAL_GetTick() - ButtonTimestamp >= 100 )
 	  {
 		  ButtonTimestamp = HAL_GetTick() ;
-		  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
-		  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET) //ขอบขาขึ้น
+		  SwitchState_S1[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10); //D1 TAsk 1
+		  SwitchState_S2[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
+		  SwitchSTate_S3[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+		  if(SwitchState_S1[1] == GPIO_PIN_SET && SwitchState_S1[0] == GPIO_PIN_RESET) //ขอบขาขึ้น
 		  {
 			 if(counte >= 1 && counte < 4){ counte += 1; }
 			 else{counte = 1;}
 		  }
-		  SwitchState[1] = SwitchState[0]; //save state
+		  SwitchState_S1[1] = SwitchState_S1[0]; //save state
+		  if(SwitchState_S2[1] == GPIO_PIN_SET && SwitchState_S2[0] == GPIO_PIN_RESET) //ชาชี้น S2 TAsk 2
+		 	  {}
+		 	  SwitchState_S2[1]=SwitchState_S2[0] ;
 	  }
 	  switch (counte)
 	  {
@@ -140,7 +147,8 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET) ;
 		  }
 	  }
-	}
+
+
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
