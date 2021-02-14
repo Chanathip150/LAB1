@@ -98,6 +98,7 @@ int main(void)
   uint32_t TimeStamp_on = 0 ;
   uint32_t TimeStamp_off = 0;
   uint8_t	counte = 1 ;
+  uint16_t LED2 = 0;
   int on = 500 ;
   int off = 1500;
 
@@ -114,19 +115,28 @@ int main(void)
 		  SwitchState_S1[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10); //D1 TAsk 1
 		  SwitchState_S2[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
 		  SwitchSTate_S3[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+
 		  if(SwitchState_S1[1] == GPIO_PIN_SET && SwitchState_S1[0] == GPIO_PIN_RESET) //ขอบขาขึ้น
 		  {
 			 if(counte >= 1 && counte < 4){ counte += 1; }
 			 else{counte = 1;}
 		  }
 		  SwitchState_S1[1] = SwitchState_S1[0]; //save state
+
 		  if(SwitchState_S2[1] == GPIO_PIN_SET && SwitchState_S2[0] == GPIO_PIN_RESET) //ชาชี้น S2 TAsk 2
 		 	  {
-			  	  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7 == GPIO_PIN_SET))
-			  	  {HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);}
-			  	  else{HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);}
+
+			  	  if(LED2 == 1)
+			  	  {
+			  		  LED2 = 0 ;
+			  	  }
+			  	  else
+			  	  {
+			  		  LED2 = 1 ;
+			  	  }
 		 	  }
-		  SwitchState_S2[1]=SwitchState_S2[0] ;
+		  SwitchState_S2[1] = SwitchState_S2[0] ;
+
 		  if(SwitchSTate_S3[1] == GPIO_PIN_SET && SwitchSTate_S3[0] == GPIO_PIN_RESET)
 		  {
 			  if(on == 500 && off == 1500)
@@ -179,7 +189,8 @@ int main(void)
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-
+	if(LED2 == 1){HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);}
+	if(LED2 == 0){ HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);}
 
   }
   /* USER CODE END 3 */
