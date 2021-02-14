@@ -89,6 +89,12 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  GPIO_PinState SwitchState[2] ;
+  uint16_t LED_D1	= 0 ;
+  uint32_t TimeStamp = 0 ;
+  uint32_t ButtonTimestamp = 0 ;
+  uint8_t	counte = 1 ;
+
 
   /* USER CODE END 2 */
 
@@ -96,9 +102,50 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+	  if(HAL_GetTick() - ButtonTimestamp >= 100 )
+	  {
+		  ButtonTimestamp = HAL_GetTick() ;
+		  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
+		  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET) //ขอบขาขึ้น
+		  {
+			 if(counte >= 1 && counte < 4){ counte += 1; }
+			 else{counte = 1;}
+		  }
+		  SwitchState[1] = SwitchState[0]; //save state
+	  }
+	  switch (counte)
+	  {
+		case 1:
+			LED_D1 = 1000 ;
+			break;
+		case 2 :
+			LED_D1 = 500 ;
+			break;
+		case 3 :
+			LED_D1 = 250 ;
+			break;
+		case 4 :
+			LED_D1 = 166.666 ;
+			break;
+	  }
+	  if(HAL_GetTick() - TimeStamp >= LED_D1)
+	  {
+		  TimeStamp = HAL_GetTick() ;
+		  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET)
+		  {
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET) ;
+		  }
+		  else
+		  {
+			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET) ;
+		  }
+	  }
+	}
 
+    /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
+
+
   }
   /* USER CODE END 3 */
 }
