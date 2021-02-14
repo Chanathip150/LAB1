@@ -96,6 +96,8 @@ int main(void)
   uint32_t TimeStamp = 0 ;
   uint32_t ButtonTimestamp = 0 ;
   uint8_t	counte = 1 ;
+  int on = 500 ;
+  int off = 1500;
 
 
   /* USER CODE END 2 */
@@ -123,10 +125,13 @@ int main(void)
 			  	  else{HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);}
 		 	  }
 		  SwitchState_S2[1]=SwitchState_S2[0] ;
-		  if(SwitchSTate_S3[])
+		  if(SwitchSTate_S3[1] == GPIO_PIN_SET && SwitchSTate_S3[0] == GPIO_PIN_RESET)
 		  {
-
+			  if(on == 500 && off == 1500)
+			  {on =1500 ; off = 500 ;}
+			  else{ on = 500 ; off = 1500 ;}
 		  }
+		  SwitchSTate_S3[1] = SwitchSTate_S3[0] ;
 	  }
 	  switch (counte)
 	  {
