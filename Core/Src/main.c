@@ -99,8 +99,9 @@ int main(void)
   uint32_t TimeStamp_off = 0;
   uint8_t	counte = 1 ;
   uint16_t LED2 = 0;
-  int on = 500 ;
-  int off = 1500;
+  uint32_t on = 500 ;
+  uint32_t off = 1500;
+
 
 
   /* USER CODE END 2 */
@@ -109,6 +110,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  if(HAL_GetTick() - ButtonTimestamp >= 100 )
 	  {
 		  ButtonTimestamp = HAL_GetTick() ;
@@ -140,8 +142,15 @@ int main(void)
 		  if(SwitchSTate_S3[1] == GPIO_PIN_SET && SwitchSTate_S3[0] == GPIO_PIN_RESET)
 		  {
 			  if(on == 500 && off == 1500)
-			  {on =1500 ; off = 500 ;}
-			  else{ on = 500 ; off = 1500 ;}
+			  {
+				  on =1500 ;
+				  off = 500 ;
+			  }
+			  else
+			  {
+				  on = 500 ;
+				  off = 1500 ;
+			  }
 		  }
 		  SwitchSTate_S3[1] = SwitchSTate_S3[0] ;
 	  }
@@ -177,15 +186,12 @@ int main(void)
 		  TimeStamp_on = HAL_GetTick() ;
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
 	  }
-	  if(TimeStamp_on == on)
+	  if(HAL_GetTick() - TimeStamp_off >= off)
 	  {
-	 			  if(HAL_GetTick() - TimeStamp_off >= off)
-	 			  {
-	 				  TimeStamp_off = HAL_GetTick();
-	 				  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-	 			  }
+		  TimeStamp_off = HAL_GetTick();
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 	  }
-	  if(TimeStamp_off == off){TimeStamp_on = 0;TimeStamp_off=0;}
+
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
