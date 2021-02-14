@@ -166,16 +166,16 @@ int main(void)
 	  {
 		  TimeStamp_on = HAL_GetTick() ;
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-
-
 	  }
 	  if(TimeStamp_on == on)
-	 		  {
+	  {
 	 			  if(HAL_GetTick() - TimeStamp_off >= off)
 	 			  {
-
+	 				  TimeStamp_off = HAL_GetTick();
+	 				  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 	 			  }
-  }
+	  }
+	  if(TimeStamp_off == off){TimeStamp_on = 0;TimeStamp_off=0;}
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
