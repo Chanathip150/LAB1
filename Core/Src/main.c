@@ -94,7 +94,9 @@ int main(void)
   GPIO_PinState SwitchSTate_S3[2] ;
   uint16_t LED_D1	= 0 ;
   uint32_t TimeStamp = 0 ;
-  uint32_t ButtonTimestamp = 0 ;
+  uint32_t ButtonTimestamp = 0;
+  uint32_t TimeStamp_on = 0 ;
+  uint32_t TimeStamp_off = 0;
   uint8_t	counte = 1 ;
   int on = 500 ;
   int off = 1500;
@@ -160,8 +162,20 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET) ;
 		  }
 	  }
+	  if(HAL_GetTick() - TimeStamp_on >= on)
+	  {
+		  TimeStamp_on = HAL_GetTick() ;
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
 
 
+	  }
+	  if(TimeStamp_on == on)
+	 		  {
+	 			  if(HAL_GetTick() - TimeStamp_off >= off)
+	 			  {
+
+	 			  }
+  }
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
