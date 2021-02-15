@@ -99,8 +99,9 @@ int main(void)
   uint32_t TimeStamp_off = 0;
   uint8_t	counte = 1 ;
   uint16_t LED2 = 0;
-  uint32_t on = 500 ;
-  uint32_t off = 1500;
+  uint32_t on = 5000 ;
+  uint32_t off = 10000;
+  int c= 1 ;
 
 
 
@@ -141,15 +142,15 @@ int main(void)
 
 		  if(SwitchSTate_S3[1] == GPIO_PIN_SET && SwitchSTate_S3[0] == GPIO_PIN_RESET)
 		  {
-			  if(on == 500 && off == 1500)
+			  if(on == 5000 && off == 10000)
 			  {
-				  on =1500 ;
-				  off = 500 ;
+				  on =10000 ;
+				  off = 5000 ;
 			  }
 			  else
 			  {
-				  on = 500 ;
-				  off = 1500 ;
+				  on = 5000 ;
+				  off = 10000 ;
 			  }
 		  }
 		  SwitchSTate_S3[1] = SwitchSTate_S3[0] ;
@@ -181,15 +182,18 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET) ;
 		  }
 	  }
-	  if(HAL_GetTick() - TimeStamp_on >= on)
+
+	  if(HAL_GetTick() - TimeStamp_on >= on )
 	  {
 		  TimeStamp_on = HAL_GetTick() ;
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+		  //if(TimeStamp_on == on ){c=2;}
 	  }
-	  if(HAL_GetTick() - TimeStamp_off >= off)
+	  if(HAL_GetTick() - TimeStamp_off >= off )
 	  {
 		  TimeStamp_off = HAL_GetTick();
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		 // if(TimeStamp_off == off){c=1;}
 	  }
 
 
