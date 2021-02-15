@@ -96,13 +96,13 @@ int main(void)
   uint32_t TimeStamp = 0 ;
   uint32_t ButtonTimestamp = 0;
   uint32_t TimeStamp_on = 0 ;
-  uint32_t TimeStamp_off = 0;
+  //uint32_t TimeStamp_off = 0;
   uint8_t	counte = 1 ;
   uint16_t LED2 = 0;
-  uint32_t on = 5000 ;
-  uint32_t off = 10000;
-  int c= 1 ;
-
+  uint32_t on = 500 ;
+  uint32_t off = 1500;
+  uint16_t state= 1 ;
+  int b = 0 ;
 
 
   /* USER CODE END 2 */
@@ -111,7 +111,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	  //b = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) ;
+	  //if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET){HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);}
+	  //if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_RESET){HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);}
 	  if(HAL_GetTick() - ButtonTimestamp >= 100 )
 	  {
 		  ButtonTimestamp = HAL_GetTick() ;
@@ -142,15 +145,17 @@ int main(void)
 
 		  if(SwitchSTate_S3[1] == GPIO_PIN_SET && SwitchSTate_S3[0] == GPIO_PIN_RESET)
 		  {
-			  if(on == 5000 && off == 10000)
+			  if(on == 500 && off == 1500)
 			  {
-				  on =10000 ;
-				  off = 5000 ;
+				  on =1500 ;
+				  off = 500 ;
+
 			  }
 			  else
 			  {
-				  on = 5000 ;
-				  off = 10000 ;
+				  on = 500 ;
+				  off = 1500 ;
+
 			  }
 		  }
 		  SwitchSTate_S3[1] = SwitchSTate_S3[0] ;
@@ -183,7 +188,49 @@ int main(void)
 		  }
 	  }
 
-	  if(HAL_GetTick() - TimeStamp_on >= on )
+	  /*switch(state)
+	  {
+	  case 1 :
+	  	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	  	  if(HAL_GetTick() - TimeStamp_on >= on )
+	  	  {
+	  		  TimeStamp_on = HAL_GetTick() ;
+	  		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	  	  }
+	  	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET){state = 2;}
+	  	  break ;
+	  case 2 :
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		  if(HAL_GetTick() -TimeStamp_on  >= off )
+		 	  {
+			  	  TimeStamp_on = HAL_GetTick();
+		 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+		 	  }
+		  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_RESET){state = 1;}
+		  break ;
+	  }*/
+
+	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET) // 0
+	  {
+		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		  	  	  if(HAL_GetTick() - TimeStamp_on >= off )
+		  	  	  {
+		  	  		  TimeStamp_on = HAL_GetTick() ;
+		  	  		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+
+		  	  	  }
+	  }
+	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_RESET) //1
+	  {
+		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+		  if(HAL_GetTick() -TimeStamp_on  >= on )
+		 		 	  {
+		 			  	  TimeStamp_on = HAL_GetTick();
+		 		 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+		 		 	  }
+	  }
+	  /*if(HAL_GetTick() - TimeStamp_on >= on )
 	  {
 		  TimeStamp_on = HAL_GetTick() ;
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
@@ -194,14 +241,14 @@ int main(void)
 		  TimeStamp_off = HAL_GetTick();
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 		 // if(TimeStamp_off == off){c=1;}
-	  }
+	  }*/
 
 
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
 	if(LED2 == 1){HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);}
 	if(LED2 == 0){ HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);}
-
+	//HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
   }
   /* USER CODE END 3 */
 }
