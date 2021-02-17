@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000570d  00000000  00000000  0002003c  2**0
+ 12 .debug_info   0000570c  00000000  00000000  0002003c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 000010f0  00000000  00000000  00025749  2**0
+ 13 .debug_abbrev 000010f0  00000000  00000000  00025748  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 000005d8  00000000  00000000  00026840  2**3
+ 14 .debug_aranges 000005d8  00000000  00000000  00026838  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000540  00000000  00000000  00026e18  2**3
+ 15 .debug_ranges 00000540  00000000  00000000  00026e10  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  00014701  00000000  00000000  00027358  2**0
+ 16 .debug_macro  00014701  00000000  00000000  00027350  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00004fd5  00000000  00000000  0003ba59  2**0
+ 17 .debug_line   00004fdb  00000000  00000000  0003ba51  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    00080e69  00000000  00000000  00040a2e  2**0
+ 18 .debug_str    00080e69  00000000  00000000  00040a2c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000c1897  2**0
+ 19 .comment      0000007b  00000000  00000000  000c1895  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000016bc  00000000  00000000  000c1914  2**2
+ 20 .debug_frame  000016bc  00000000  00000000  000c1910  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -492,22 +492,16 @@ int main(void)
  8000586:	d107      	bne.n	8000598 <main+0xc0>
 		 	  {
 
-			  	  if(LED2 == 1)
+			  	  if(LED2 == 1) {LED2 = 0 ;}
  8000588:	8bbb      	ldrh	r3, [r7, #28]
  800058a:	2b01      	cmp	r3, #1
  800058c:	d102      	bne.n	8000594 <main+0xbc>
-			  	  {
-			  		  LED2 = 0 ;
  800058e:	2300      	movs	r3, #0
  8000590:	83bb      	strh	r3, [r7, #28]
  8000592:	e001      	b.n	8000598 <main+0xc0>
-			  	  }
-			  	  else
-			  	  {
-			  		  LED2 = 1 ;
+			  	  else{LED2 = 1 ;}
  8000594:	2301      	movs	r3, #1
  8000596:	83bb      	strh	r3, [r7, #28]
-			  	  }
 		 	  }
 		  SwitchState_S2[1] = SwitchState_S2[0] ;
  8000598:	793b      	ldrb	r3, [r7, #4]
@@ -649,6 +643,7 @@ int main(void)
  800066e:	429a      	cmp	r2, r3
  8000670:	d807      	bhi.n	8000682 <main+0x1aa>
 		  	  	  {
+
 		  	  		  TimeStamp_on = HAL_GetTick() ;
  8000672:	f000 fabf 	bl	8000bf4 <HAL_GetTick>
  8000676:	6238      	str	r0, [r7, #32]

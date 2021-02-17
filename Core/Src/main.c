@@ -132,14 +132,8 @@ int main(void)
 		  if(SwitchState_S2[1] == GPIO_PIN_SET && SwitchState_S2[0] == GPIO_PIN_RESET) //ชาชี้น S2 TAsk 2
 		 	  {
 
-			  	  if(LED2 == 1)
-			  	  {
-			  		  LED2 = 0 ;
-			  	  }
-			  	  else
-			  	  {
-			  		  LED2 = 1 ;
-			  	  }
+			  	  if(LED2 == 1) {LED2 = 0 ;}
+			  	  else{LED2 = 1 ;}
 		 	  }
 		  SwitchState_S2[1] = SwitchState_S2[0] ;
 
@@ -215,6 +209,7 @@ int main(void)
 		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 		  	  	  if(HAL_GetTick() - TimeStamp_on >= off )
 		  	  	  {
+
 		  	  		  TimeStamp_on = HAL_GetTick() ;
 		  	  		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 
